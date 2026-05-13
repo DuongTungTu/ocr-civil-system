@@ -1,3 +1,4 @@
+from flask import redirect
 from flask import Flask, render_template, request, redirect, session
 import sqlite3
 import unicodedata
