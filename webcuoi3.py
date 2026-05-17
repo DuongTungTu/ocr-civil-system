@@ -31,7 +31,7 @@ MARRIAGE_FIELDS = {
     "quoc_tich_chong": "Quốc tịch chồng",
     "noi_cu_tru_chong": "Nơi cư trú chồng",
     "giay_to_chong": "Giấy tờ chồng",
-    "noi_dang_ky_ket_hon": "Nơi đăng ký",
+    "noi_dang_ky": "Nơi đăng ký",
 } 
 # WHITELIST KHAI SINH 
 BIRTH_FIELDS = {
@@ -156,9 +156,30 @@ button{
    </style>
 </head>
 <body> 
-<div class="card"> 
-<h2>TRA CỨU GIẤY TỜ HÀNH CHÍNH</h2>
-<p><b>Database:</b> {{ dbname }}</p> 
+<div class="card">
+
+<div style="display:flex; justify-content:space-between; align-items:center;">
+
+  <h2 style="margin:0;">
+    TRA CỨU GIẤY TỜ HÀNH CHÍNH
+  </h2>
+
+  <a href="/logout">
+    <button style="
+      background:#dc3545;
+      color:white;
+      border:none;
+      padding:8px 14px;
+      border-radius:6px;
+      cursor:pointer;
+    ">
+      Đăng xuất
+    </button>
+  </a>
+
+</div>
+
+<p><b>Database:</b> {{ dbname }}</p>
 <div class="controls">
   <select id="doc">
     <option value="marriage">Giấy kết hôn</option>
@@ -218,7 +239,13 @@ function render(text){
      .replace("None","null")
   )); 
   let html = "<table><tr>";
-  Object.keys(rows[0]).forEach(k => html += `<th>${k}</th>`);
+const fields = docSelect.value === "marriage"
+  ? marriageFields
+  : birthFields;
+
+Object.keys(rows[0]).forEach(k => {
+  html += `<th>${fields[k] || k}</th>`;
+});
   html += "</tr>"; 
   rows.forEach(r=>{
     html += "<tr>";
